@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as episodeActions from "../../redux/actions/episodeActions";
 import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 
 class EpisodesPage extends React.Component {
   state = {
@@ -17,8 +18,7 @@ class EpisodesPage extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.dispatch(episodeActions.createEpisode(this.state.episode));
-    alert(this.state.episode.title);
+    this.props.actions.createEpisode(this.state.episode);
   };
 
   render() {
@@ -32,13 +32,17 @@ class EpisodesPage extends React.Component {
           value={this.state.episode.title}
         />
         <input type="submit" value="Save" />
+        {this.props.episodes.map(episode => (
+          <div key={episode.title}>{episode.title}</div>
+        ))}
       </form>
     );
   }
 }
 
 EpisodesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired,
+  episodes: PropTypes.array.isRequired
 };
 
 function mapStateToProps(state) {
@@ -47,4 +51,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(EpisodesPage);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(episodeActions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EpisodesPage);

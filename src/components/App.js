@@ -5,6 +5,7 @@ import AboutPage from "./about/AboutPage";
 import Header from "./common/Header";
 import PageNotFound from "./PageNotFound";
 import EpisodesPage from "./episode/EpisodesPage";
+import ManageEpisodesPage from "./episode/ManageEpisodesPage";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route exact path="/" component={HomePage} />
         <Route path="/about" component={AboutPage} />
         <Route path="/episodes" component={EpisodesPage} />
+        <Route path="/episode/:slug" component={ManageEpisodesPage} />
+        <Route path="/episode" component={ManageEpisodesPage} />
         <Route component={PageNotFound} />
       </Switch>
     </div>

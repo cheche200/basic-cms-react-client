@@ -3,8 +3,12 @@ import initialState from "./initialState";
 
 export default function episodeReducer(state = initialState.episodes, action) {
   switch (action.type) {
-    case types.CREATE_EPISODE:
-      return [...state, { ...action.episode }];
+    case types.CREATE_EPISODE_SUCCESS:
+      return [...state, { ...action.episodes }];
+    case types.UPDATE_EPISODE_SUCCESS:
+      return state.map(episode =>
+        episode.id === action.episode.id ? action.episode : episode
+      );
     case types.LOAD_EPISODES_SUCCESS:
       return action.episodes;
     default:

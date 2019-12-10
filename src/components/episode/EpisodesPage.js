@@ -5,19 +5,25 @@ import * as authorActions from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import EpisodeList from "./EpisodeList";
+import { Redirect } from "react-router-dom";
 
 class EpisodesPage extends React.Component {
+  state = {
+    redirectToAddEpisodesPage: false
+  };
+
   componentDidMount() {
-    const { actions, episodes, authors } = this.props;
+    const { episodes, authors, actions } = this.props;
+
     if (episodes.length === 0) {
       actions.loadEpisodes().catch(error => {
-        alert("Loading episodes failed:" + error);
+        alert("Loading episodes failed" + error);
       });
     }
 
     if (authors.length === 0) {
       actions.loadAuthors().catch(error => {
-        alert("Loading authors failed:" + error);
+        alert("Loading authors failed" + error);
       });
     }
   }
@@ -25,7 +31,17 @@ class EpisodesPage extends React.Component {
   render() {
     return (
       <>
+        {this.state.redirectToAddEpisodesPage && <Redirect to="/episode" />}
         <h2>Episodes</h2>
+
+        <button
+          style={{ marginBottom: 20 }}
+          className="btn btn-primary add-episode"
+          onClick={() => this.setState({ redirectToAddEpisodesPage: true })}
+        >
+          Add Episode
+        </button>
+
         <EpisodeList episodes={this.props.episodes} />
       </>
     );
@@ -33,9 +49,9 @@ class EpisodesPage extends React.Component {
 }
 
 EpisodesPage.propTypes = {
-  actions: PropTypes.object.isRequired,
+  authors: PropTypes.array.isRequired,
   episodes: PropTypes.array.isRequired,
-  authors: PropTypes.array.isRequired
+  actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {

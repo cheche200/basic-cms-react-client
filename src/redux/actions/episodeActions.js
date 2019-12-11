@@ -5,12 +5,12 @@ export function loadEpisodesSuccess(episodes) {
   return { type: types.LOAD_EPISODES_SUCCESS, episodes };
 }
 
-export function updateEpisodeSuccess(episodes) {
-  return { type: types.UPDATE_EPISODE_SUCCESS, episodes };
+export function updateEpisodeSuccess(episode) {
+  return { type: types.UPDATE_EPISODE_SUCCESS, episode };
 }
 
-export function createEpisodeSuccess(episodes) {
-  return { type: types.CREATE_EPISODE_SUCCESS, episodes };
+export function createEpisodeSuccess(episode) {
+  return { type: types.CREATE_EPISODE_SUCCESS, episode };
 }
 
 export function loadEpisodes() {

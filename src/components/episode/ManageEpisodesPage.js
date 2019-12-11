@@ -44,11 +44,10 @@ function ManageEpisodesPage({
 
   function handleSave(event) {
     event.preventDefault();
-    saveEpisode(episode)
-      .then(() => {
-        history.push("/episodes");
-      })
-      .catch(error => alert(error));
+    saveEpisode(episode).then(() => {
+      history.push("/episodes");
+    });
+    // .catch(error => alert(error));
   }
 
   return (

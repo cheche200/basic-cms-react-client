@@ -5,6 +5,8 @@ import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import EpisodeForm from "./EpisodeForm";
 import { newEpisode } from "../../../tools/mockData";
+import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 function ManageEpisodesPage({
   episodes,
@@ -17,6 +19,7 @@ function ManageEpisodesPage({
 }) {
   const [episode, setEpisode] = useState({ ...props.episode });
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (episodes.length === 0) {
@@ -42,21 +45,43 @@ function ManageEpisodesPage({
     }));
   }
 
-  function handleSave(event) {
-    event.preventDefault();
-    saveEpisode(episode).then(() => {
-      history.push("/episodes");
-    });
-    // .catch(error => alert(error));
+  function formIsValid() {
+    const { title, authorId, category } = episode;
+    const errors = {};
+
+    if (!title) errors.title = "Title is required";
+    if (!authorId) errors.author = "Author is required";
+    if (!category) errors.category = "Category is required";
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
   }
 
-  return (
+  function handleSave(event) {
+    event.preventDefault();
+    if (!formIsValid()) return;
+    setSaving(true);
+    saveEpisode(episode)
+      .then(() => {
+        toast.success("Episode saved");
+        history.push("/episodes");
+      })
+      .catch(error => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
+  }
+
+  return authors.length === 0 || episodes.length === 0 ? (
+    <Spinner />
+  ) : (
     <EpisodeForm
       episode={episode}
       errors={errors}
       authors={authors}
       onChange={handleChange}
       onSave={handleSave}
+      saving={saving}
     />
   );
 }

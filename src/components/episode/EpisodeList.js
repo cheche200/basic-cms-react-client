@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const EpisodeList = ({ episodes }) => (
+const EpisodeList = ({ episodes, onDeleteClick }) => (
   <table className="table">
     <thead>
       <tr>
@@ -10,6 +10,7 @@ const EpisodeList = ({ episodes }) => (
         <th>Title</th>
         <th>Author</th>
         <th>Category</th>
+        <th />
       </tr>
     </thead>
     <tbody>
@@ -29,6 +30,14 @@ const EpisodeList = ({ episodes }) => (
             </td>
             <td>{episode.authorName}</td>
             <td>{episode.category}</td>
+            <td>
+              <button
+                className="btn btn-outline-danger"
+                onClick={() => onDeleteClick(episode)}
+              >
+                Delete
+              </button>
+            </td>
           </tr>
         );
       })}
@@ -37,7 +46,8 @@ const EpisodeList = ({ episodes }) => (
 );
 
 EpisodeList.propTypes = {
-  episodes: PropTypes.array.isRequired
+  episodes: PropTypes.array.isRequired,
+  onDeleteClick: PropTypes.func.isRequired
 };
 
 export default EpisodeList;

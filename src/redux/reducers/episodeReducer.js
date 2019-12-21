@@ -11,6 +11,8 @@ export default function episodeReducer(state = initialState.episodes, action) {
       );
     case types.LOAD_EPISODES_SUCCESS:
       return action.episodes;
+    case types.DELETE_EPISODE_OPTIMISTIC:
+      return state.filter(episode => episode.id !== action.episode.id);
     default:
       return state;
   }

@@ -1,4 +1,5 @@
 export default {
   episodes: [],
-  authors: []
+  authors: [],
+  apiCallsInProgress: 0
 };

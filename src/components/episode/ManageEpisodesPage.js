@@ -8,7 +8,7 @@ import { newEpisode } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 
-function ManageEpisodesPage({
+export function ManageEpisodesPage({
   episodes,
   authors,
   loadAuthors,
